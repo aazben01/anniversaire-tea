@@ -3,73 +3,287 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Joyeux anniversaire ❤️</title>
+  <title>Portail sécurisé - Mesures préventives</title>
   <style>
     body { font-family: system-ui, Arial; margin: 0; background: #0b0b10; color: #fff; }
-    .wrap { max-width: 760px; margin: 0 auto; padding: 40px 18px; }
-    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 22px; }
-    h1 { font-size: 34px; margin: 0 0 10px; }
-    p { line-height: 1.6; font-size: 16px; opacity: 0.92; }
-    .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-    button { border: 0; border-radius: 12px; padding: 12px 14px; cursor: pointer; font-weight: 650; }
-    .primary { background: #ff4d88; color: #111; }
-    .ghost { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.14); }
-    .small { font-size: 13px; opacity: 0.85; margin-top: 14px; }
-    textarea { width: 100%; min-height: 120px; border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: #fff; }
-    .reveal { margin-top: 14px; display: none; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 28px 16px 60px; }
+    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 18px; }
+    h1 { font-size: 20px; margin: 0 0 8px; }
+    p { line-height: 1.6; margin: 8px 0; opacity: 0.92; }
+    .muted { opacity: 0.75; font-size: 13px; }
+    .tag { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); font-size: 12px; }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+    .tile {
+      position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 14px;
+      border: 2px solid rgba(255,255,255,0.12); cursor: pointer; user-select: none;
+      background: rgba(255,255,255,0.04);
+    }
+    .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tile.selected { border-color: rgba(255,77,136,0.95); box-shadow: 0 0 0 3px rgba(255,77,136,0.2) inset; }
+    .tile .check {
+      position: absolute; top: 10px; right: 10px; width: 26px; height: 26px; border-radius: 999px;
+      background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.2);
+      display: grid; place-items: center; font-weight: 900; opacity: 0; transform: scale(0.9);
+      transition: 120ms ease;
+    }
+    .tile.selected .check { opacity: 1; transform: scale(1); }
+
+    button {
+      border: 0; border-radius: 12px; padding: 12px 14px; cursor: pointer; font-weight: 750;
+      background: #ff4d88; color: #111;
+    }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .ghost {
+      background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.14);
+    }
+    .msg { margin-top: 10px; font-size: 14px; opacity: 0.9; }
+    .hidden { display: none; }
+
+    /* Birthday */
+    .hero h2 { font-size: 34px; margin: 0 0 10px; }
+    .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+    .photo { border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); }
+    .photo img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .panel { margin-top: 14px; padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); }
+    @media (max-width: 640px) { .gallery { grid-template-columns: 1fr; } }
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <div class="card">
-      <h1>Joyeux anniversaire, mon amour ❤️</h1>
+
+    <!-- STEP 1: "PORTAIL" (intro corporate) -->
+    <section id="portalStep" class="card">
+      <div class="row" style="justify-content:space-between;">
+        <span class="tag">Portail interne - Accès sécurisé</span>
+        <span class="muted">Réf. dossier: BF-PZL-042</span>
+      </div>
+
+      <h1>Mesures préventives - Mise à jour</h1>
+      <p class="muted">
+        Ce portail diffuse une communication interne fictive et parodique, signée par Alfredo Al Aziz.
+      </p>
       <p>
-        J’ai codé cette petite page juste pour toi. Il y a un message, un mini-jeu, et une surprise.
+        Avant affichage du contenu, une vérification simple est requise conformément aux procédures standards
+        de validation d’accès.
       </p>
 
-      <div class="btns">
-        <button class="primary" id="open">Ouvrir la surprise</button>
-        <button class="ghost" id="confetti">Lancer des confettis</button>
+      <div class="row">
+        <button id="goCaptchaBtn">Continuer</button>
+        <button id="portalInfoBtn" class="ghost">Pourquoi cette vérification ?</button>
       </div>
 
-      <div class="reveal" id="reveal">
-        <p><strong>Mon message:</strong></p>
-        <textarea readonly>
-Écris ici ton message perso (tu remplaceras ce texte avant d’envoyer).
-        </textarea>
-        <p class="small">PS: tu peux ajouter une photo en remplaçant le contenu par une image (je t’explique en dessous).</p>
+      <p id="portalInfo" class="msg hidden">
+        Il s’agit d’un contrôle basique de type captcha, pour éviter les accès automatisés. Rien de plus.
+      </p>
+    </section>
+
+    <!-- STEP 2: CAPTCHA -->
+    <section id="captchaStep" class="card hidden" style="margin-top:14px;">
+      <div class="row" style="justify-content:space-between;">
+        <span class="tag">Vérification</span>
+        <span class="muted">Contrôle: Sélection d’images (3x3)</span>
       </div>
-    </div>
+
+      <h1>Vérification d’accès</h1>
+      <p><strong>Veuillez sélectionner toutes les cacahuètes que vous voyez sur ces images.</strong></p>
+      <p class="muted">Astuce: une cacahuète est une cacahuète. Les robots confondent souvent.</p>
+
+      <div id="grid" class="grid" aria-label="Grille de sélection"></div>
+
+      <div class="row">
+        <button id="validateBtn" disabled>Valider</button>
+        <button id="resetBtn" class="ghost">Réinitialiser</button>
+      </div>
+
+      <p id="feedback" class="msg"></p>
+    </section>
+
+    <!-- STEP 3: BIRTHDAY -->
+    <section id="birthdayStep" class="card hidden" style="margin-top:14px;">
+      <div class="hero">
+        <h2>Joyeux anniversaire Tea ❤️</h2>
+        <p>
+          Accès validé. Présence du spécimen “puzzolino” confirmée.
+        </p>
+      </div>
+
+      <div class="panel">
+        <p style="margin:0;">
+          Mets ici ton vrai texte. Exemple:
+          <br><br>
+          Tea, je voulais un truc un peu différent, un peu “nous”.
+          Merci d’être toi. Je t’aime.
+        </p>
+      </div>
+
+      <div class="gallery">
+        <!-- Remplace par tes vraies photos pour le reveal -->
+        <div class="photo"><img src="reveal1.jpg" alt="Photo 1"></div>
+        <div class="photo"><img src="reveal2.jpg" alt="Photo 2"></div>
+        <div class="photo"><img src="reveal3.jpg" alt="Photo 3"></div>
+        <div class="photo"><img src="reveal4.jpg" alt="Photo 4"></div>
+      </div>
+
+      <div class="row">
+        <button id="confettiBtn">Lancer des confettis</button>
+        <button id="backBtn" class="ghost">Revoir le contrôle</button>
+      </div>
+    </section>
+
   </div>
 
   <script>
-    const reveal = document.getElementById("reveal");
-    document.getElementById("open").onclick = () => {
-      reveal.style.display = "block";
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    };
+    // ===== CONFIG IMAGES (CAPTCHA) =====
+    // Mets ici tes 9 images (dans ton repo) + indique lesquelles sont des "cacahuètes" (photos d'elle).
+    // Remplace img1.jpg...img9.jpg par tes vrais noms.
+    const images = [
+      { src: "img1.jpg", isPeanut: true },
+      { src: "img2.jpg", isPeanut: true },
+      { src: "img3.jpg", isPeanut: true },
+      { src: "img4.jpg", isPeanut: false },
+      { src: "img5.jpg", isPeanut: false },
+      { src: "img6.jpg", isPeanut: true },
+      { src: "img7.jpg", isPeanut: false },
+      { src: "img8.jpg", isPeanut: true },
+      { src: "img9.jpg", isPeanut: false },
+    ];
 
-    document.getElementById("confetti").onclick = () => {
-      // mini "confetti" ultra simple sans librairie
-      for (let i = 0; i < 120; i++) {
+    // ===== ELEMENTS =====
+    const portalStep = document.getElementById("portalStep");
+    const captchaStep = document.getElementById("captchaStep");
+    const birthdayStep = document.getElementById("birthdayStep");
+
+    const goCaptchaBtn = document.getElementById("goCaptchaBtn");
+    const portalInfoBtn = document.getElementById("portalInfoBtn");
+    const portalInfo = document.getElementById("portalInfo");
+
+    const grid = document.getElementById("grid");
+    const validateBtn = document.getElementById("validateBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const feedback = document.getElementById("feedback");
+    const confettiBtn = document.getElementById("confettiBtn");
+    const backBtn = document.getElementById("backBtn");
+
+    // ===== STATE =====
+    const selected = new Set();
+
+    function show(el) { el.classList.remove("hidden"); }
+    function hide(el) { el.classList.add("hidden"); }
+
+    portalInfoBtn.addEventListener("click", () => {
+      portalInfo.classList.toggle("hidden");
+    });
+
+    goCaptchaBtn.addEventListener("click", () => {
+      hide(portalStep);
+      show(captchaStep);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    function renderGrid() {
+      grid.innerHTML = "";
+      images.forEach((img, idx) => {
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.setAttribute("role", "button");
+        tile.setAttribute("tabindex", "0");
+
+        const imageEl = document.createElement("img");
+        imageEl.src = img.src;
+        imageEl.alt = "Image " + (idx + 1);
+
+        const check = document.createElement("div");
+        check.className = "check";
+        check.textContent = "✓";
+
+        tile.appendChild(imageEl);
+        tile.appendChild(check);
+
+        const toggle = () => {
+          if (selected.has(idx)) selected.delete(idx);
+          else selected.add(idx);
+          tile.classList.toggle("selected");
+          validateBtn.disabled = selected.size === 0;
+          feedback.textContent = "";
+        };
+
+        tile.addEventListener("click", toggle);
+        tile.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggle();
+          }
+        });
+
+        grid.appendChild(tile);
+      });
+    }
+
+    function resetAll() {
+      selected.clear();
+      validateBtn.disabled = true;
+      feedback.textContent = "";
+      renderGrid();
+    }
+
+    function isValidSelection() {
+      // doit sélectionner toutes les vraies cacahuètes, et aucune fausse
+      for (let i = 0; i < images.length; i++) {
+        const shouldSelect = images[i].isPeanut;
+        const didSelect = selected.has(i);
+        if (shouldSelect !== didSelect) return false;
+      }
+      return true;
+    }
+
+    validateBtn.addEventListener("click", () => {
+      if (isValidSelection()) {
+        hide(captchaStep);
+        show(birthdayStep);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        feedback.textContent = "Sélection incorrecte. Merci de réessayer.";
+      }
+    });
+
+    resetBtn.addEventListener("click", resetAll);
+
+    backBtn.addEventListener("click", () => {
+      hide(birthdayStep);
+      show(captchaStep);
+      feedback.textContent = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    confettiBtn.addEventListener("click", () => {
+      for (let i = 0; i < 140; i++) {
         const s = document.createElement("div");
         s.style.position = "fixed";
-        s.style.left = Math.random()*100 + "vw";
+        s.style.left = Math.random() * 100 + "vw";
         s.style.top = "-10px";
         s.style.width = "8px";
         s.style.height = "12px";
-        s.style.background = `hsl(${Math.random()*360}, 90%, 60%)`;
-        s.style.transform = `rotate(${Math.random()*360}deg)`;
+        s.style.background = `hsl(${Math.random() * 360}, 90%, 60%)`;
+        s.style.transform = `rotate(${Math.random() * 360}deg)`;
         s.style.borderRadius = "2px";
         s.style.zIndex = 9999;
         document.body.appendChild(s);
-        const fall = s.animate([
-          { transform: s.style.transform, top: "-10px", opacity: 1 },
-          { transform: `rotate(${Math.random()*720}deg)`, top: "105vh", opacity: 0.9 }
-        ], { duration: 1600 + Math.random()*1200, easing: "cubic-bezier(.2,.8,.2,1)" });
+        const fall = s.animate(
+          [
+            { transform: s.style.transform, top: "-10px", opacity: 1 },
+            { transform: `rotate(${Math.random() * 720}deg)`, top: "105vh", opacity: 0.9 },
+          ],
+          { duration: 1600 + Math.random() * 1200, easing: "cubic-bezier(.2,.8,.2,1)" }
+        );
         fall.onfinish = () => s.remove();
       }
-    };
+    });
+
+    // init
+    renderGrid();
   </script>
 </body>
 </html>
