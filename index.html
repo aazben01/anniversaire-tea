@@ -41,7 +41,6 @@
     .msg { margin-top: 10px; font-size: 14px; opacity: 0.9; }
     .hidden { display: none; }
 
-    /* Birthday */
     .hero h2 { font-size: 34px; margin: 0 0 10px; }
     .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
     .photo { border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); }
@@ -54,7 +53,7 @@
 <body>
   <div class="wrap">
 
-    <!-- STEP 1: "PORTAIL" (intro corporate) -->
+    <!-- STEP 1 -->
     <section id="portalStep" class="card">
       <div class="row" style="justify-content:space-between;">
         <span class="tag">Portail interne - Accès sécurisé</span>
@@ -62,36 +61,22 @@
       </div>
 
       <h1>Mesures préventives - Mise à jour</h1>
-      <p class="muted">
-        Ce portail diffuse une communication interne fictive et parodique, signée par Alfredo Al Aziz.
-      </p>
+
       <p>
-        Avant affichage du contenu, une vérification simple est requise conformément aux procédures standards
-        de validation d’accès.
+        Accès réservé à la consultation des notes internes liées aux mesures préventives temporaires.
       </p>
 
       <div class="row">
         <button id="goCaptchaBtn">Continuer</button>
-        <button id="portalInfoBtn" class="ghost">Pourquoi cette vérification ?</button>
       </div>
-
-      <p id="portalInfo" class="msg hidden">
-        Il s’agit d’un contrôle basique de type captcha, pour éviter les accès automatisés. Rien de plus.
-      </p>
     </section>
 
-    <!-- STEP 2: CAPTCHA -->
+    <!-- STEP 2 CAPTCHA -->
     <section id="captchaStep" class="card hidden" style="margin-top:14px;">
-      <div class="row" style="justify-content:space-between;">
-        <span class="tag">Vérification</span>
-        <span class="muted">Contrôle: Sélection d’images (3x3)</span>
-      </div>
-
       <h1>Vérification d’accès</h1>
       <p><strong>Veuillez sélectionner toutes les cacahuètes que vous voyez sur ces images.</strong></p>
-      <p class="muted">Astuce: une cacahuète est une cacahuète. Les robots confondent souvent.</p>
 
-      <div id="grid" class="grid" aria-label="Grille de sélection"></div>
+      <div id="grid" class="grid"></div>
 
       <div class="row">
         <button id="validateBtn" disabled>Valider</button>
@@ -101,44 +86,30 @@
       <p id="feedback" class="msg"></p>
     </section>
 
-    <!-- STEP 3: BIRTHDAY -->
+    <!-- STEP 3 BIRTHDAY -->
     <section id="birthdayStep" class="card hidden" style="margin-top:14px;">
       <div class="hero">
         <h2>Joyeux anniversaire Tea ❤️</h2>
-        <p>
-          Accès validé. Présence du spécimen “puzzolino” confirmée.
-        </p>
+        <p>Présence du spécimen “puzzolino” confirmée.</p>
       </div>
 
       <div class="panel">
-        <p style="margin:0;">
-          Mets ici ton vrai texte. Exemple:
-          <br><br>
-          Tea, je voulais un truc un peu différent, un peu “nous”.
-          Merci d’être toi. Je t’aime.
+        <p>
+          Mets ici ton message personnel.
         </p>
       </div>
 
       <div class="gallery">
-        <!-- Remplace par tes vraies photos pour le reveal -->
-        <div class="photo"><img src="reveal1.jpg" alt="Photo 1"></div>
-        <div class="photo"><img src="reveal2.jpg" alt="Photo 2"></div>
-        <div class="photo"><img src="reveal3.jpg" alt="Photo 3"></div>
-        <div class="photo"><img src="reveal4.jpg" alt="Photo 4"></div>
-      </div>
-
-      <div class="row">
-        <button id="confettiBtn">Lancer des confettis</button>
-        <button id="backBtn" class="ghost">Revoir le contrôle</button>
+        <div class="photo"><img src="reveal1.jpg"></div>
+        <div class="photo"><img src="reveal2.jpg"></div>
+        <div class="photo"><img src="reveal3.jpg"></div>
+        <div class="photo"><img src="reveal4.jpg"></div>
       </div>
     </section>
 
   </div>
 
   <script>
-    // ===== CONFIG IMAGES (CAPTCHA) =====
-    // Mets ici tes 9 images (dans ton repo) + indique lesquelles sont des "cacahuètes" (photos d'elle).
-    // Remplace img1.jpg...img9.jpg par tes vrais noms.
     const images = [
       { src: "img1.jpg", isPeanut: true },
       { src: "img2.jpg", isPeanut: true },
@@ -151,36 +122,21 @@
       { src: "img9.jpg", isPeanut: false },
     ];
 
-    // ===== ELEMENTS =====
     const portalStep = document.getElementById("portalStep");
     const captchaStep = document.getElementById("captchaStep");
     const birthdayStep = document.getElementById("birthdayStep");
 
     const goCaptchaBtn = document.getElementById("goCaptchaBtn");
-    const portalInfoBtn = document.getElementById("portalInfoBtn");
-    const portalInfo = document.getElementById("portalInfo");
-
     const grid = document.getElementById("grid");
     const validateBtn = document.getElementById("validateBtn");
     const resetBtn = document.getElementById("resetBtn");
     const feedback = document.getElementById("feedback");
-    const confettiBtn = document.getElementById("confettiBtn");
-    const backBtn = document.getElementById("backBtn");
 
-    // ===== STATE =====
     const selected = new Set();
 
-    function show(el) { el.classList.remove("hidden"); }
-    function hide(el) { el.classList.add("hidden"); }
-
-    portalInfoBtn.addEventListener("click", () => {
-      portalInfo.classList.toggle("hidden");
-    });
-
     goCaptchaBtn.addEventListener("click", () => {
-      hide(portalStep);
-      show(captchaStep);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      portalStep.classList.add("hidden");
+      captchaStep.classList.remove("hidden");
     });
 
     function renderGrid() {
@@ -188,101 +144,45 @@
       images.forEach((img, idx) => {
         const tile = document.createElement("div");
         tile.className = "tile";
-        tile.setAttribute("role", "button");
-        tile.setAttribute("tabindex", "0");
-
         const imageEl = document.createElement("img");
         imageEl.src = img.src;
-        imageEl.alt = "Image " + (idx + 1);
-
-        const check = document.createElement("div");
-        check.className = "check";
-        check.textContent = "✓";
-
         tile.appendChild(imageEl);
-        tile.appendChild(check);
 
-        const toggle = () => {
+        tile.addEventListener("click", () => {
           if (selected.has(idx)) selected.delete(idx);
           else selected.add(idx);
           tile.classList.toggle("selected");
           validateBtn.disabled = selected.size === 0;
           feedback.textContent = "";
-        };
-
-        tile.addEventListener("click", toggle);
-        tile.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            toggle();
-          }
         });
 
         grid.appendChild(tile);
       });
     }
 
-    function resetAll() {
-      selected.clear();
-      validateBtn.disabled = true;
-      feedback.textContent = "";
-      renderGrid();
-    }
-
     function isValidSelection() {
-      // doit sélectionner toutes les vraies cacahuètes, et aucune fausse
       for (let i = 0; i < images.length; i++) {
-        const shouldSelect = images[i].isPeanut;
-        const didSelect = selected.has(i);
-        if (shouldSelect !== didSelect) return false;
+        if (images[i].isPeanut !== selected.has(i)) return false;
       }
       return true;
     }
 
     validateBtn.addEventListener("click", () => {
       if (isValidSelection()) {
-        hide(captchaStep);
-        show(birthdayStep);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        captchaStep.classList.add("hidden");
+        birthdayStep.classList.remove("hidden");
       } else {
         feedback.textContent = "Sélection incorrecte. Merci de réessayer.";
       }
     });
 
-    resetBtn.addEventListener("click", resetAll);
-
-    backBtn.addEventListener("click", () => {
-      hide(birthdayStep);
-      show(captchaStep);
+    resetBtn.addEventListener("click", () => {
+      selected.clear();
+      validateBtn.disabled = true;
       feedback.textContent = "";
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      renderGrid();
     });
 
-    confettiBtn.addEventListener("click", () => {
-      for (let i = 0; i < 140; i++) {
-        const s = document.createElement("div");
-        s.style.position = "fixed";
-        s.style.left = Math.random() * 100 + "vw";
-        s.style.top = "-10px";
-        s.style.width = "8px";
-        s.style.height = "12px";
-        s.style.background = `hsl(${Math.random() * 360}, 90%, 60%)`;
-        s.style.transform = `rotate(${Math.random() * 360}deg)`;
-        s.style.borderRadius = "2px";
-        s.style.zIndex = 9999;
-        document.body.appendChild(s);
-        const fall = s.animate(
-          [
-            { transform: s.style.transform, top: "-10px", opacity: 1 },
-            { transform: `rotate(${Math.random() * 720}deg)`, top: "105vh", opacity: 0.9 },
-          ],
-          { duration: 1600 + Math.random() * 1200, easing: "cubic-bezier(.2,.8,.2,1)" }
-        );
-        fall.onfinish = () => s.remove();
-      }
-    });
-
-    // init
     renderGrid();
   </script>
 </body>
