@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Joyeux anniversaire ❤️</title>
+  <style>
+    body { font-family: system-ui, Arial; margin: 0; background: #0b0b10; color: #fff; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 40px 18px; }
+    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 22px; }
+    h1 { font-size: 34px; margin: 0 0 10px; }
+    p { line-height: 1.6; font-size: 16px; opacity: 0.92; }
+    .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+    button { border: 0; border-radius: 12px; padding: 12px 14px; cursor: pointer; font-weight: 650; }
+    .primary { background: #ff4d88; color: #111; }
+    .ghost { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.14); }
+    .small { font-size: 13px; opacity: 0.85; margin-top: 14px; }
+    textarea { width: 100%; min-height: 120px; border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: #fff; }
+    .reveal { margin-top: 14px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Joyeux anniversaire, mon amour ❤️</h1>
+      <p>
+        J’ai codé cette petite page juste pour toi. Il y a un message, un mini-jeu, et une surprise.
+      </p>
+
+      <div class="btns">
+        <button class="primary" id="open">Ouvrir la surprise</button>
+        <button class="ghost" id="confetti">Lancer des confettis</button>
+      </div>
+
+      <div class="reveal" id="reveal">
+        <p><strong>Mon message:</strong></p>
+        <textarea readonly>
+Écris ici ton message perso (tu remplaceras ce texte avant d’envoyer).
+        </textarea>
+        <p class="small">PS: tu peux ajouter une photo en remplaçant le contenu par une image (je t’explique en dessous).</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const reveal = document.getElementById("reveal");
+    document.getElementById("open").onclick = () => {
+      reveal.style.display = "block";
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    };
+
+    document.getElementById("confetti").onclick = () => {
+      // mini "confetti" ultra simple sans librairie
+      for (let i = 0; i < 120; i++) {
+        const s = document.createElement("div");
+        s.style.position = "fixed";
+        s.style.left = Math.random()*100 + "vw";
+        s.style.top = "-10px";
+        s.style.width = "8px";
+        s.style.height = "12px";
+        s.style.background = `hsl(${Math.random()*360}, 90%, 60%)`;
+        s.style.transform = `rotate(${Math.random()*360}deg)`;
+        s.style.borderRadius = "2px";
+        s.style.zIndex = 9999;
+        document.body.appendChild(s);
+        const fall = s.animate([
+          { transform: s.style.transform, top: "-10px", opacity: 1 },
+          { transform: `rotate(${Math.random()*720}deg)`, top: "105vh", opacity: 0.9 }
+        ], { duration: 1600 + Math.random()*1200, easing: "cubic-bezier(.2,.8,.2,1)" });
+        fall.onfinish = () => s.remove();
+      }
+    };
+  </script>
+</body>
+</html>
