@@ -39,215 +39,240 @@ input {
 <body>
 <div class="wrap">
 
-<section id="portalSection" class="card">
-  <h1>Mesures préventives - Mise à jour</h1>
-  <p>Accès réservé à la consultation des notes internes liées aux mesures préventives temporaires.</p>
-  <button id="startBtn">Continuer</button>
-</section>
+  <!-- PORTAIL -->
+  <section id="portalSection" class="card">
+    <h1>Mesures préventives - Mise à jour</h1>
+    <p>Accès réservé à la consultation des notes internes liées aux mesures préventives temporaires.</p>
+    <p class="muted">Une vérification simple sera requise avant affichage du contenu.</p>
+    <button id="startBtn">Continuer</button>
+  </section>
 
-<section id="captchaSection" class="card hidden">
-  <h1 id="instruction"></h1>
-  <p id="roundIndicator" class="muted"></p>
-  <div id="grid" class="grid"></div>
-  <button id="validateBtn">Valider</button>
-  <button id="resetBtn" class="ghost">Réinitialiser</button>
-  <p id="feedback" class="muted"></p>
-</section>
+  <!-- CAPTCHA -->
+  <section id="captchaSection" class="card hidden">
+    <h1 id="instruction"></h1>
+    <p id="roundIndicator" class="muted"></p>
+    <div id="grid" class="grid"></div>
 
-<section id="textSection" class="card hidden">
-  <h1>Vérification sémantique finale</h1>
-  <p>
-    chaton chaton<br>
-    j’aime le chaton<br>
-    tu es le chaton<br>
-    donc je ______
-  </p>
-  <input type="text" id="loveInput" placeholder="Complétez la phrase">
-  <button id="textValidateBtn">Valider</button>
-  <p id="textFeedback" class="muted"></p>
-</section>
+    <button id="validateBtn">Valider</button>
+    <button id="resetBtn" class="ghost">Réinitialiser</button>
 
-<section id="revealSection" class="card hidden">
-  <h1>Joyeux anniversaire Tea ❤️</h1>
-  <p class="muted">Validation complète. Accès accordé.</p>
+    <p id="feedback" class="muted"></p>
+  </section>
 
-  <div class="grid">
-    <div class="tile"><img src="reveal1.jpeg"></div>
-    <div class="tile"><img src="reveal2.jpeg"></div>
-    <div class="tile"><img src="reveal3.jpeg"></div>
-    <div class="tile"><img src="reveal4.jpeg"></div>
-  </div>
+  <!-- TEXTE A TROU -->
+  <section id="textSection" class="card hidden">
+    <h1>Vérification sémantique finale</h1>
+    <p>
+      chaton chaton<br>
+      j’aime le chaton<br>
+      tu es le chaton<br>
+      donc je ______
+    </p>
 
-  <button id="confettiBtn">Lancer des confettis</button>
-</section>
+    <input type="text" id="loveInput" placeholder="Complétez la phrase">
+    <button id="textValidateBtn">Valider</button>
+    <p id="textFeedback" class="muted"></p>
+  </section>
+
+  <!-- REVEAL -->
+  <section id="revealSection" class="card hidden">
+    <h1>Joyeux anniversaire Tea ❤️</h1>
+    <p class="muted">Validation complète. Accès accordé.</p>
+
+    <div class="grid">
+      <div class="tile"><img src="reveal1.jpeg" alt="Reveal 1"></div>
+      <div class="tile"><img src="reveal2.jpeg" alt="Reveal 2"></div>
+      <div class="tile"><img src="reveal3.jpeg" alt="Reveal 3"></div>
+      <div class="tile"><img src="reveal4.jpeg" alt="Reveal 4"></div>
+    </div>
+
+    <button id="confettiBtn">Lancer des confettis</button>
+  </section>
 
 </div>
 
 <script>
-
 const rounds = [
 
-{
-instruction:"Veuillez sélectionner toutes les cacahuètes présentes sur ces images.",
-images:[
-{src:"r1_1.jpeg",correct:true},
-{src:"r1_2.jpeg",correct:false},
-{src:"r1_3.jpeg",correct:false},
-{src:"r1_4.jpeg",correct:true},
-{src:"r1_5.jpeg",correct:true},
-{src:"r1_6.jpeg",correct:false},
-{src:"r1_7.jpeg",correct:false},
-{src:"r1_8.jpeg",correct:true},
-{src:"r1_9.jpeg",correct:false}
-]
-},
+  // ROUND 1: bonnes réponses = 1,4,5,8
+  {
+    instruction: "Veuillez sélectionner toutes les cacahuètes présentes sur ces images.",
+    images: [
+      {src:"r1_1.jpeg", correct:true},
+      {src:"r1_2.jpeg", correct:false},
+      {src:"r1_3.jpeg", correct:false},
+      {src:"r1_4.jpeg", correct:true},
+      {src:"r1_5.jpeg", correct:true},
+      {src:"r1_6.jpeg", correct:false},
+      {src:"r1_7.jpeg", correct:false},
+      {src:"r1_8.jpeg", correct:true},
+      {src:"r1_9.jpeg", correct:false}
+    ]
+  },
 
-{
-instruction:"Veuillez sélectionner toutes les images présentant un fort indice de mignonnerie animale.",
-images:[
-{src:"r2_1.jpeg",correct:true},
-{src:"r2_2.jpeg",correct:true},
-{src:"r2_3.jpeg",correct:false},
-{src:"r2_4.jpeg",correct:true},
-{src:"r2_5.jpeg",correct:false},
-{src:"r2_6.jpeg",correct:false},
-{src:"r2_7.jpeg",correct:false},
-{src:"r2_8.jpeg",correct:true},
-{src:"r2_9.jpeg",correct:true}
-]
-},
+  // ROUND 2: bonnes réponses = 1,2,4,8,9
+  {
+    instruction: "Veuillez sélectionner toutes les images présentant un fort indice de mignonnerie animale.",
+    images: [
+      {src:"r2_1.jpeg", correct:true},
+      {src:"r2_2.jpeg", correct:true},
+      {src:"r2_3.jpeg", correct:false},
+      {src:"r2_4.jpeg", correct:true},
+      {src:"r2_5.jpeg", correct:false},
+      {src:"r2_6.jpeg", correct:false},
+      {src:"r2_7.jpeg", correct:false},
+      {src:"r2_8.jpeg", correct:true},
+      {src:"r2_9.jpeg", correct:true}
+    ]
+  },
 
-{
-instruction:"Veuillez sélectionner toutes les preuves d’amour inconditionnel… envers la nourriture.",
-images:[
-{src:"r3_1.jpeg",correct:true},
-{src:"r3_2.jpeg",correct:true},
-{src:"r3_3.jpeg",correct:true},
-{src:"r3_4.jpeg",correct:true},
-{src:"r3_5.jpeg",correct:false},
-{src:"r3_6.jpeg",correct:true},
-{src:"r3_7.jpeg",correct:true},
-{src:"r3_8.jpeg",correct:true},
-{src:"r3_9.jpeg",correct:true}
-]
-},
+  // ROUND 3: bonnes réponses = 1,2,3,4,6,7,8,9 (seule la 5 est fausse)
+  {
+    instruction: "Veuillez sélectionner toutes les preuves d’amour inconditionnel… envers la nourriture.",
+    images: [
+      {src:"r3_1.jpeg", correct:true},
+      {src:"r3_2.jpeg", correct:true},
+      {src:"r3_3.jpeg", correct:true},
+      {src:"r3_4.jpeg", correct:true},
+      {src:"r3_5.jpeg", correct:false},
+      {src:"r3_6.jpeg", correct:true},
+      {src:"r3_7.jpeg", correct:true},
+      {src:"r3_8.jpeg", correct:true},
+      {src:"r3_9.jpeg", correct:true}
+    ]
+  },
 
-{
-instruction:"Veuillez sélectionner toutes les images présentant une valeur esthétique exceptionnelle.",
-images:[
-{src:"r4_1.jpeg",correct:true},
-{src:"r4_2.jpeg",correct:false},
-{src:"r4_3.jpeg",correct:true},
-{src:"r4_4.jpeg",correct:false},
-{src:"r4_5.jpeg",correct:true},
-{src:"r4_6.jpeg",correct:false},
-{src:"r4_7.jpeg",correct:false},
-{src:"r4_8.jpeg",correct:true},
-{src:"r4_9.jpeg",correct:false}
-]
-}
+  // ROUND 4: TOUT EST BON
+  {
+    instruction: "Veuillez sélectionner toutes les images présentant une valeur esthétique exceptionnelle.",
+    images: [
+      {src:"r4_1.jpeg", correct:true},
+      {src:"r4_2.jpeg", correct:true},
+      {src:"r4_3.jpeg", correct:true},
+      {src:"r4_4.jpeg", correct:true},
+      {src:"r4_5.jpeg", correct:true},
+      {src:"r4_6.jpeg", correct:true},
+      {src:"r4_7.jpeg", correct:true},
+      {src:"r4_8.jpeg", correct:true},
+      {src:"r4_9.jpeg", correct:true}
+    ]
+  }
 
 ];
 
-let currentRound=0;
-let selected=new Set();
+let currentRound = 0;
+const selected = new Set();
 
-const portalSection=document.getElementById("portalSection");
-const captchaSection=document.getElementById("captchaSection");
-const textSection=document.getElementById("textSection");
-const revealSection=document.getElementById("revealSection");
+const portalSection = document.getElementById("portalSection");
+const captchaSection = document.getElementById("captchaSection");
+const textSection = document.getElementById("textSection");
+const revealSection = document.getElementById("revealSection");
 
-const instructionEl=document.getElementById("instruction");
-const roundIndicator=document.getElementById("roundIndicator");
-const gridEl=document.getElementById("grid");
-const feedbackEl=document.getElementById("feedback");
+const instructionEl = document.getElementById("instruction");
+const roundIndicator = document.getElementById("roundIndicator");
+const gridEl = document.getElementById("grid");
+const feedbackEl = document.getElementById("feedback");
 
-document.getElementById("startBtn").onclick=()=>{
-portalSection.classList.add("hidden");
-captchaSection.classList.remove("hidden");
-loadRound();
+document.getElementById("startBtn").onclick = () => {
+  portalSection.classList.add("hidden");
+  captchaSection.classList.remove("hidden");
+  currentRound = 0;
+  loadRound();
 };
 
-function loadRound(){
-selected.clear();
-feedbackEl.textContent="";
-instructionEl.textContent=rounds[currentRound].instruction;
-roundIndicator.textContent="Round "+(currentRound+1)+"/4";
-gridEl.innerHTML="";
+function loadRound() {
+  selected.clear();
+  feedbackEl.textContent = "";
+  instructionEl.textContent = rounds[currentRound].instruction;
+  roundIndicator.textContent = "Round " + (currentRound + 1) + "/4";
+  gridEl.innerHTML = "";
 
-rounds[currentRound].images.forEach((img,index)=>{
-const tile=document.createElement("div");
-tile.className="tile";
+  rounds[currentRound].images.forEach((img, index) => {
+    const tile = document.createElement("div");
+    tile.className = "tile";
 
-const image=document.createElement("img");
-image.src=img.src;
-tile.appendChild(image);
+    const image = document.createElement("img");
+    image.src = img.src;
+    image.alt = "Image " + (index + 1);
 
-tile.onclick=()=>{
-if(selected.has(index)){
-selected.delete(index);
-tile.classList.remove("selected");
-}else{
-selected.add(index);
-tile.classList.add("selected");
+    tile.appendChild(image);
+
+    tile.onclick = () => {
+      if (selected.has(index)) {
+        selected.delete(index);
+        tile.classList.remove("selected");
+      } else {
+        selected.add(index);
+        tile.classList.add("selected");
+      }
+    };
+
+    gridEl.appendChild(tile);
+  });
 }
+
+document.getElementById("resetBtn").onclick = () => loadRound();
+
+document.getElementById("validateBtn").onclick = () => {
+  const imgs = rounds[currentRound].images;
+  for (let i = 0; i < imgs.length; i++) {
+    if (imgs[i].correct !== selected.has(i)) {
+      feedbackEl.textContent = "Sélection incorrecte. Merci de réessayer.";
+      return;
+    }
+  }
+
+  currentRound++;
+
+  if (currentRound < rounds.length) {
+    loadRound();
+  } else {
+    captchaSection.classList.add("hidden");
+    textSection.classList.remove("hidden");
+    document.getElementById("textFeedback").textContent = "";
+    document.getElementById("loveInput").value = "";
+  }
 };
 
-gridEl.appendChild(tile);
-});
+function normalize(s) {
+  return (s || "")
+    .toLowerCase()
+    .trim()
+    .replaceAll("’", "'")
+    .replace(/\s+/g, " ");
 }
 
-document.getElementById("validateBtn").onclick=()=>{
-const correctIndexes=rounds[currentRound].images
-.map((img,i)=>img.correct?i:null)
-.filter(i=>i!==null);
-
-const isCorrect=correctIndexes.length===selected.size &&
-correctIndexes.every(i=>selected.has(i));
-
-if(!isCorrect){
-feedbackEl.textContent="Sélection incorrecte. Merci de réessayer.";
-return;
-}
-
-currentRound++;
-
-if(currentRound<rounds.length){
-loadRound();
-}else{
-captchaSection.classList.add("hidden");
-textSection.classList.remove("hidden");
-}
+document.getElementById("textValidateBtn").onclick = () => {
+  const value = normalize(document.getElementById("loveInput").value);
+  if (value.includes("t'aime") || value.includes("t aime")) {
+    textSection.classList.add("hidden");
+    revealSection.classList.remove("hidden");
+  } else {
+    document.getElementById("textFeedback").textContent = "Réponse presque correcte… réessayez.";
+  }
 };
 
-document.getElementById("textValidateBtn").onclick=()=>{
-const value=document.getElementById("loveInput").value.toLowerCase().trim();
+document.getElementById("confettiBtn").onclick = () => {
+  for (let i = 0; i < 140; i++) {
+    const s = document.createElement("div");
+    s.style.position = "fixed";
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.top = "-10px";
+    s.style.width = "8px";
+    s.style.height = "12px";
+    s.style.background = `hsl(${Math.random() * 360}, 90%, 60%)`;
+    s.style.borderRadius = "2px";
+    s.style.zIndex = 9999;
+    document.body.appendChild(s);
 
-if(value.includes("t'aime")||value.includes("t aime")){
-textSection.classList.add("hidden");
-revealSection.classList.remove("hidden");
-}else{
-document.getElementById("textFeedback").textContent="Réponse presque correcte… réessayez.";
-}
+    const fall = s.animate(
+      [{ top: "-10px", opacity: 1 }, { top: "105vh", opacity: 0.9 }],
+      { duration: 1600 + Math.random() * 1200, easing: "cubic-bezier(.2,.8,.2,1)" }
+    );
+    fall.onfinish = () => s.remove();
+  }
 };
-
-document.getElementById("confettiBtn").onclick=()=>{
-for(let i=0;i<120;i++){
-const s=document.createElement("div");
-s.style.position="fixed";
-s.style.left=Math.random()*100+"vw";
-s.style.top="-10px";
-s.style.width="8px";
-s.style.height="12px";
-s.style.background=`hsl(${Math.random()*360},90%,60%)`;
-s.style.zIndex=9999;
-document.body.appendChild(s);
-const fall=s.animate([{top:"-10px"},{top:"105vh"}],
-{duration:1500+Math.random()*1000});
-fall.onfinish=()=>s.remove();
-}
-};
-
 </script>
+
 </body>
 </html>
