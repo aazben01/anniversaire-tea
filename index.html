@@ -1,442 +1,288 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portail interne - Accès sécurisé</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portail interne</title>
 
-  <style>
-    body { font-family: system-ui, Arial; margin: 0; background: #0b0b10; color: #fff; }
-    .wrap { max-width: 920px; margin: 0 auto; padding: 28px 16px 60px; }
-    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 18px; }
-    h1 { font-size: 20px; margin: 0 0 8px; }
-    p { line-height: 1.6; margin: 8px 0; opacity: 0.92; }
-    .muted { opacity: 0.75; font-size: 13px; }
-    .tag { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); font-size: 12px; }
-    .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; align-items: center; justify-content: space-between; }
-    .rowLeft { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .rowRight { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .hidden { display: none; }
+<style>
+body {
+  font-family: system-ui, Arial;
+  margin:0;
+  background:#0b0b10;
+  color:white;
+}
+.wrap {
+  max-width:900px;
+  margin:auto;
+  padding:30px 16px 60px;
+}
+.card {
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+}
+h1 { font-size:20px; }
+p { line-height:1.6; }
 
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
-    .tile {
-      position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 14px;
-      border: 2px solid rgba(255,255,255,0.12); cursor: pointer; user-select: none;
-      background: rgba(255,255,255,0.04);
-    }
-    .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .tile.selected { border-color: rgba(255,77,136,0.95); box-shadow: 0 0 0 3px rgba(255,77,136,0.2) inset; }
-    .tile .check {
-      position: absolute; top: 10px; right: 10px; width: 26px; height: 26px; border-radius: 999px;
-      background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.2);
-      display: grid; place-items: center; font-weight: 900; opacity: 0; transform: scale(0.9);
-      transition: 120ms ease;
-    }
-    .tile.selected .check { opacity: 1; transform: scale(1); }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:15px;
+}
 
-    button {
-      border: 0; border-radius: 12px; padding: 12px 14px; cursor: pointer; font-weight: 750;
-      background: #ff4d88; color: #111;
-    }
-    button:disabled { opacity: 0.5; cursor: not-allowed; }
-    .ghost {
-      background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.14);
-    }
-    .msg { margin-top: 10px; font-size: 14px; opacity: 0.9; }
+.tile {
+  aspect-ratio:1/1;
+  overflow:hidden;
+  border-radius:12px;
+  cursor:pointer;
+  border:2px solid rgba(255,255,255,0.12);
+}
 
-    /* Text-a-trou */
-    .poem { margin-top: 10px; padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); }
-    .poem pre { margin: 0; white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    input[type="text"]{
-      width: 100%; box-sizing: border-box;
-      margin-top: 12px; padding: 12px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(0,0,0,0.25);
-      color: #fff;
-      font-size: 16px;
-    }
+.tile img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-    /* Reveal */
-    .hero h2 { font-size: 34px; margin: 0 0 10px; }
-    .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
-    .photo { border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); }
-    .photo img { width: 100%; height: 100%; display: block; object-fit: cover; }
-    .panel { margin-top: 14px; padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); }
-    @media (max-width: 640px) { .gallery { grid-template-columns: 1fr; } }
-  </style>
+.tile.selected {
+  border-color:#ff4d88;
+}
+
+button {
+  margin-top:15px;
+  padding:12px 14px;
+  border:0;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  background:#ff4d88;
+  color:#111;
+}
+
+.hidden { display:none; }
+
+input {
+  padding:10px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.3);
+  width:100%;
+  margin-top:10px;
+  background:rgba(0,0,0,0.3);
+  color:white;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
+<div class="wrap">
 
-    <!-- STEP 0: PORTAIL -->
-    <section id="portalStep" class="card">
-      <div class="row">
-        <div class="rowLeft">
-          <span class="tag">Portail interne - Accès sécurisé</span>
-          <span class="tag">Mesures préventives</span>
-        </div>
-        <div class="rowRight">
-          <span class="muted">Réf. dossier: BF-PZL-042</span>
-        </div>
-      </div>
+<section id="portalSection" class="card">
+  <h1>Mesures préventives - Mise à jour</h1>
+  <p>Accès réservé à la consultation des notes internes liées aux mesures préventives temporaires.</p>
+  <button id="startBtn">Continuer</button>
+</section>
 
-      <h1>Mesures préventives - Mise à jour</h1>
-      <p>Accès réservé à la consultation des notes internes liées aux mesures préventives temporaires.</p>
-      <p class="muted">Une vérification simple sera requise avant affichage du contenu.</p>
+<section id="captchaSection" class="card hidden">
+  <h1 id="instruction"></h1>
+  <p id="roundIndicator"></p>
+  <div id="grid" class="grid"></div>
+  <button id="validateBtn">Valider</button>
+  <p id="feedback"></p>
+</section>
 
-      <div class="row" style="justify-content:flex-start;">
-        <button id="goCaptchaBtn">Continuer</button>
-        <button id="portalInfoBtn" class="ghost">Détails</button>
-      </div>
-      <p id="portalInfo" class="msg hidden">Contrôle standard de type captcha. Aucune action supplémentaire requise.</p>
-    </section>
+<section id="textSection" class="card hidden">
+  <h1>Vérification sémantique finale</h1>
+  <p>
+  chaton chaton<br>
+  j’aime le chaton<br>
+  tu es le chaton<br>
+  donc je ______
+  </p>
+  <input type="text" id="loveInput" placeholder="Complétez la phrase">
+  <button id="textValidateBtn">Valider</button>
+  <p id="textFeedback"></p>
+</section>
 
-    <!-- STEP 1: CAPTCHA (4 rounds) -->
-    <section id="captchaStep" class="card hidden" style="margin-top:14px;">
-      <div class="row">
-        <div class="rowLeft">
-          <span class="tag">Vérification</span>
-          <span class="muted" id="roundLabel">Round 1/4</span>
-        </div>
-        <div class="rowRight">
-          <button id="resetBtn" class="ghost">Réinitialiser</button>
-        </div>
-      </div>
+<section id="revealSection" class="card hidden">
+  <h1>Joyeux anniversaire Tea ❤️</h1>
+  <p>Validation complète. Accès accordé.</p>
 
-      <h1>Vérification d’accès</h1>
-      <p><strong id="instruction"></strong></p>
-      <p class="muted">Sélectionnez toutes les images correspondant au critère, puis validez.</p>
-
-      <div id="grid" class="grid" aria-label="Grille de sélection"></div>
-
-      <div class="row" style="justify-content:flex-start;">
-        <button id="validateBtn" disabled>Valider</button>
-        <button id="backToPortalBtn" class="ghost">Retour</button>
-      </div>
-
-      <p id="feedback" class="msg"></p>
-    </section>
-
-    <!-- STEP 2: TEXTE A TROU -->
-    <section id="textStep" class="card hidden" style="margin-top:14px;">
-      <div class="row">
-        <div class="rowLeft">
-          <span class="tag">Validation finale</span>
-        </div>
-        <div class="rowRight">
-          <button id="backToCaptchaBtn" class="ghost">Retour</button>
-        </div>
-      </div>
-
-      <h1>Vérification sémantique finale</h1>
-
-      <div class="poem">
-        <pre>chaton chaton
-j’aime le chaton
-tu es le chaton
-donc je ______</pre>
-      </div>
-
-      <input id="loveInput" type="text" placeholder="Complétez la phrase" />
-      <div class="row" style="justify-content:flex-start;">
-        <button id="textValidateBtn">Valider</button>
-        <button id="textClearBtn" class="ghost">Effacer</button>
-      </div>
-      <p id="textFeedback" class="msg"></p>
-    </section>
-
-    <!-- STEP 3: REVEAL -->
-    <section id="revealStep" class="card hidden" style="margin-top:14px;">
-      <div class="hero">
-        <h2>Joyeux anniversaire Tea ❤️</h2>
-        <p class="muted">Validation complète. Accès accordé.</p>
-      </div>
-
-      <div class="panel">
-        <p style="margin:0;">
-          Mets ici ton message final (sincère, simple, fort).
-          <br><br>
-          Exemple: "Je t’aime. Je suis fier de toi. Je te célèbre aujourd’hui."
-        </p>
-      </div>
-
-      <div class="gallery">
-        <!-- Remplace ces noms par tes vraies images de reveal -->
-        <div class="photo"><img src="reveal1.jpg" alt="Photo 1"></div>
-        <div class="photo"><img src="reveal2.jpg" alt="Photo 2"></div>
-        <div class="photo"><img src="reveal3.jpg" alt="Photo 3"></div>
-        <div class="photo"><img src="reveal4.jpg" alt="Photo 4"></div>
-      </div>
-
-      <div class="row" style="justify-content:flex-start;">
-        <button id="confettiBtn">Lancer des confettis</button>
-        <button id="restartBtn" class="ghost">Recommencer</button>
-      </div>
-    </section>
-
+  <div class="grid">
+    <div class="tile"><img src="reveal1.jpeg"></div>
+    <div class="tile"><img src="reveal2.jpeg"></div>
+    <div class="tile"><img src="reveal3.jpeg"></div>
+    <div class="tile"><img src="reveal4.jpeg"></div>
   </div>
 
-  <script>
-    // ====== CONFIG: 4 ROUNDS + INSTRUCTIONS EXACTES ======
-    // Pour chaque round: 9 images. Mets correct:true uniquement sur les images qui doivent être sélectionnées.
-    // Renommage simple recommandé:
-    // Round 1: r1_1.jpg ... r1_9.jpg
-    // Round 2: r2_1.jpg ... r2_9.jpg
-    // Round 3: r3_1.jpg ... r3_9.jpg
-    // Round 4: r4_1.jpg ... r4_9.jpg
+  <button id="confettiBtn">Lancer des confettis</button>
+</section>
 
-    const rounds = [
-      {
-        instruction: "Veuillez sélectionner toutes les cacahuètes présentes sur ces images.",
-        images: [
-          { src: "r1_1.jpg", correct: true  },
-          { src: "r1_2.jpg", correct: false },
-          { src: "r1_3.jpg", correct: true  },
-          { src: "r1_4.jpg", correct: false },
-          { src: "r1_5.jpg", correct: true  },
-          { src: "r1_6.jpg", correct: false },
-          { src: "r1_7.jpg", correct: false },
-          { src: "r1_8.jpg", correct: true  },
-          { src: "r1_9.jpg", correct: false },
-        ],
-      },
-      {
-        instruction: "Veuillez sélectionner toutes les images présentant un fort indice de mignonnerie animale.",
-        images: [
-          { src: "r2_1.jpg", correct: true  },
-          { src: "r2_2.jpg", correct: false },
-          { src: "r2_3.jpg", correct: true  },
-          { src: "r2_4.jpg", correct: false },
-          { src: "r2_5.jpg", correct: true  },
-          { src: "r2_6.jpg", correct: false },
-          { src: "r2_7.jpg", correct: false },
-          { src: "r2_8.jpg", correct: true  },
-          { src: "r2_9.jpg", correct: false },
-        ],
-      },
-      {
-        instruction: "Veuillez sélectionner toutes les preuves d’amour inconditionnel… envers la nourriture.",
-        images: [
-          { src: "r3_1.jpg", correct: true  },
-          { src: "r3_2.jpg", correct: false },
-          { src: "r3_3.jpg", correct: true  },
-          { src: "r3_4.jpg", correct: false },
-          { src: "r3_5.jpg", correct: true  },
-          { src: "r3_6.jpg", correct: false },
-          { src: "r3_7.jpg", correct: false },
-          { src: "r3_8.jpg", correct: true  },
-          { src: "r3_9.jpg", correct: false },
-        ],
-      },
-      {
-        instruction: "Veuillez sélectionner toutes les images présentant une valeur esthétique exceptionnelle.",
-        images: [
-          { src: "r4_1.jpg", correct: true  },
-          { src: "r4_2.jpg", correct: false },
-          { src: "r4_3.jpg", correct: true  },
-          { src: "r4_4.jpg", correct: false },
-          { src: "r4_5.jpg", correct: true  },
-          { src: "r4_6.jpg", correct: false },
-          { src: "r4_7.jpg", correct: false },
-          { src: "r4_8.jpg", correct: true  },
-          { src: "r4_9.jpg", correct: false },
-        ],
-      },
-    ];
+</div>
 
-    // ====== ELEMENTS ======
-    const portalStep = document.getElementById("portalStep");
-    const captchaStep = document.getElementById("captchaStep");
-    const textStep = document.getElementById("textStep");
-    const revealStep = document.getElementById("revealStep");
+<script>
 
-    const goCaptchaBtn = document.getElementById("goCaptchaBtn");
-    const portalInfoBtn = document.getElementById("portalInfoBtn");
-    const portalInfo = document.getElementById("portalInfo");
+const rounds = [
+{
+instruction:"Veuillez sélectionner toutes les cacahuètes présentes sur ces images.",
+images:[
+{src:"r1_1.jpeg",correct:true},
+{src:"r1_2.jpeg",correct:false},
+{src:"r1_3.jpeg",correct:true},
+{src:"r1_4.jpeg",correct:false},
+{src:"r1_5.jpeg",correct:true},
+{src:"r1_6.jpeg",correct:false},
+{src:"r1_7.jpeg",correct:false},
+{src:"r1_8.jpeg",correct:true},
+{src:"r1_9.jpeg",correct:false}
+]
+},
+{
+instruction:"Veuillez sélectionner toutes les images présentant un fort indice de mignonnerie animale.",
+images:[
+{src:"r2_1.jpeg",correct:true},
+{src:"r2_2.jpeg",correct:false},
+{src:"r2_3.jpeg",correct:true},
+{src:"r2_4.jpeg",correct:false},
+{src:"r2_5.jpeg",correct:true},
+{src:"r2_6.jpeg",correct:false},
+{src:"r2_7.jpeg",correct:false},
+{src:"r2_8.jpeg",correct:true},
+{src:"r2_9.jpeg",correct:false}
+]
+},
+{
+instruction:"Veuillez sélectionner toutes les preuves d’amour inconditionnel… envers la nourriture.",
+images:[
+{src:"r3_1.jpeg",correct:true},
+{src:"r3_2.jpeg",correct:false},
+{src:"r3_3.jpeg",correct:true},
+{src:"r3_4.jpeg",correct:false},
+{src:"r3_5.jpeg",correct:true},
+{src:"r3_6.jpeg",correct:false},
+{src:"r3_7.jpeg",correct:false},
+{src:"r3_8.jpeg",correct:true},
+{src:"r3_9.jpeg",correct:false}
+]
+},
+{
+instruction:"Veuillez sélectionner toutes les images présentant une valeur esthétique exceptionnelle.",
+images:[
+{src:"r4_1.jpeg",correct:true},
+{src:"r4_2.jpeg",correct:false},
+{src:"r4_3.jpeg",correct:true},
+{src:"r4_4.jpeg",correct:false},
+{src:"r4_5.jpeg",correct:true},
+{src:"r4_6.jpeg",correct:false},
+{src:"r4_7.jpeg",correct:false},
+{src:"r4_8.jpeg",correct:true},
+{src:"r4_9.jpeg",correct:false}
+]
+}
+];
 
-    const roundLabel = document.getElementById("roundLabel");
-    const instructionEl = document.getElementById("instruction");
-    const grid = document.getElementById("grid");
-    const validateBtn = document.getElementById("validateBtn");
-    const resetBtn = document.getElementById("resetBtn");
-    const backToPortalBtn = document.getElementById("backToPortalBtn");
-    const feedback = document.getElementById("feedback");
+let currentRound=0;
+let selected=new Set();
 
-    const loveInput = document.getElementById("loveInput");
-    const textValidateBtn = document.getElementById("textValidateBtn");
-    const textClearBtn = document.getElementById("textClearBtn");
-    const textFeedback = document.getElementById("textFeedback");
-    const backToCaptchaBtn = document.getElementById("backToCaptchaBtn");
+const portalSection=document.getElementById("portalSection");
+const captchaSection=document.getElementById("captchaSection");
+const textSection=document.getElementById("textSection");
+const revealSection=document.getElementById("revealSection");
 
-    const confettiBtn = document.getElementById("confettiBtn");
-    const restartBtn = document.getElementById("restartBtn");
+const instructionEl=document.getElementById("instruction");
+const roundIndicator=document.getElementById("roundIndicator");
+const gridEl=document.getElementById("grid");
+const feedbackEl=document.getElementById("feedback");
 
-    // ====== STATE ======
-    let roundIndex = 0;
-    const selected = new Set();
+document.getElementById("startBtn").onclick=()=>{
+portalSection.classList.add("hidden");
+captchaSection.classList.remove("hidden");
+loadRound();
+};
 
-    function show(el){ el.classList.remove("hidden"); }
-    function hide(el){ el.classList.add("hidden"); }
+function loadRound(){
+selected.clear();
+feedbackEl.textContent="";
+instructionEl.textContent=rounds[currentRound].instruction;
+roundIndicator.textContent="Round "+(currentRound+1)+"/4";
+gridEl.innerHTML="";
 
-    portalInfoBtn.addEventListener("click", () => portalInfo.classList.toggle("hidden"));
+rounds[currentRound].images.forEach((img,index)=>{
+const tile=document.createElement("div");
+tile.className="tile";
 
-    goCaptchaBtn.addEventListener("click", () => {
-      hide(portalStep);
-      show(captchaStep);
-      startCaptcha();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+const image=document.createElement("img");
+image.src=img.src;
+tile.appendChild(image);
 
-    backToPortalBtn.addEventListener("click", () => {
-      hide(captchaStep);
-      show(portalStep);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+tile.onclick=()=>{
+if(selected.has(index)){
+selected.delete(index);
+tile.classList.remove("selected");
+}else{
+selected.add(index);
+tile.classList.add("selected");
+}
+};
 
-    backToCaptchaBtn.addEventListener("click", () => {
-      hide(textStep);
-      show(captchaStep);
-      textFeedback.textContent = "";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+gridEl.appendChild(tile);
+});
+}
 
-    restartBtn.addEventListener("click", () => {
-      hide(revealStep);
-      show(portalStep);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+document.getElementById("validateBtn").onclick=()=>{
+const correctIndexes=rounds[currentRound].images
+.map((img,i)=>img.correct?i:null)
+.filter(i=>i!==null);
 
-    function startCaptcha() {
-      roundIndex = 0;
-      feedback.textContent = "";
-      loadRound();
-    }
+const isCorrect=correctIndexes.length===selected.size &&
+correctIndexes.every(i=>selected.has(i));
 
-    function loadRound() {
-      selected.clear();
-      validateBtn.disabled = true;
-      feedback.textContent = "";
+if(!isCorrect){
+feedbackEl.textContent="Sélection incorrecte. Merci de réessayer.";
+return;
+}
 
-      const round = rounds[roundIndex];
-      roundLabel.textContent = `Round ${roundIndex + 1}/${rounds.length}`;
-      instructionEl.textContent = round.instruction;
+currentRound++;
 
-      grid.innerHTML = "";
-      round.images.forEach((img, idx) => {
-        const tile = document.createElement("div");
-        tile.className = "tile";
-        tile.setAttribute("role", "button");
-        tile.setAttribute("tabindex", "0");
+if(currentRound<rounds.length){
+loadRound();
+}else{
+captchaSection.classList.add("hidden");
+textSection.classList.remove("hidden");
+}
+};
 
-        const imageEl = document.createElement("img");
-        imageEl.src = img.src;
-        imageEl.alt = `Image ${idx + 1}`;
+document.getElementById("textValidateBtn").onclick=()=>{
+const value=document.getElementById("loveInput").value.toLowerCase().trim();
 
-        const check = document.createElement("div");
-        check.className = "check";
-        check.textContent = "✓";
+if(value.includes("t'aime")||value.includes("t aime")){
+textSection.classList.add("hidden");
+revealSection.classList.remove("hidden");
+}else{
+document.getElementById("textFeedback").textContent="Réponse presque correcte… réessayez.";
+}
+};
 
-        tile.appendChild(imageEl);
-        tile.appendChild(check);
+document.getElementById("confettiBtn").onclick=()=>{
+for(let i=0;i<120;i++){
+const s=document.createElement("div");
+s.style.position="fixed";
+s.style.left=Math.random()*100+"vw";
+s.style.top="-10px";
+s.style.width="8px";
+s.style.height="12px";
+s.style.background=`hsl(${Math.random()*360},90%,60%)`;
+s.style.zIndex=9999;
+document.body.appendChild(s);
+const fall=s.animate([{top:"-10px"},{top:"105vh"}],
+{duration:1500+Math.random()*1000});
+fall.onfinish=()=>s.remove();
+}
+};
 
-        const toggle = () => {
-          if (selected.has(idx)) selected.delete(idx);
-          else selected.add(idx);
-          tile.classList.toggle("selected");
-          validateBtn.disabled = selected.size === 0;
-          feedback.textContent = "";
-        };
-
-        tile.addEventListener("click", toggle);
-        tile.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
-        });
-
-        grid.appendChild(tile);
-      });
-    }
-
-    function isValidSelection() {
-      const imgs = rounds[roundIndex].images;
-      for (let i = 0; i < imgs.length; i++) {
-        if (imgs[i].correct !== selected.has(i)) return false;
-      }
-      return true;
-    }
-
-    validateBtn.addEventListener("click", () => {
-      if (!isValidSelection()) {
-        feedback.textContent = "Sélection incorrecte. Merci de réessayer.";
-        return;
-      }
-
-      // Round OK
-      if (roundIndex < rounds.length - 1) {
-        roundIndex += 1;
-        loadRound();
-      } else {
-        // Move to text step
-        hide(captchaStep);
-        show(textStep);
-        loveInput.value = "";
-        textFeedback.textContent = "";
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    });
-
-    resetBtn.addEventListener("click", () => loadRound());
-
-    // ====== TEXTE A TROU ======
-    function normalize(s) {
-      return (s || "")
-        .toLowerCase()
-        .trim()
-        .replaceAll("’", "'")
-        .replace(/\s+/g, " ");
-    }
-
-    textClearBtn.addEventListener("click", () => {
-      loveInput.value = "";
-      textFeedback.textContent = "";
-      loveInput.focus();
-    });
-
-    textValidateBtn.addEventListener("click", () => {
-      const v = normalize(loveInput.value);
-      // On accepte: "t'aime", "je t'aime", "t aime", "je t aime"
-      const ok = v.includes("t'aime") || v.includes("t aime");
-      if (!ok) {
-        textFeedback.textContent = "Réponse presque correcte. Réessayez.";
-        return;
-      }
-      hide(textStep);
-      show(revealStep);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    // ====== CONFETTI ======
-    confettiBtn.addEventListener("click", () => {
-      for (let i = 0; i < 160; i++) {
-        const s = document.createElement("div");
-        s.style.position = "fixed";
-        s.style.left = Math.random()*100 + "vw";
-        s.style.top = "-10px";
-        s.style.width = "8px";
-        s.style.height = "12px";
-        s.style.background = `hsl(${Math.random()*360}, 90%, 60%)`;
-        s.style.transform = `rotate(${Math.random()*360}deg)`;
-        s.style.borderRadius = "2px";
-        s.style.zIndex = 9999;
-        document.body.appendChild(s);
-        const fall = s.animate([
-          { transform: s.style.transform, top: "-10px", opacity: 1 },
-          { transform: `rotate(${Math.random()*720}deg)`, top: "105vh", opacity: 0.9 }
-        ], { duration: 1600 + Math.random()*1200, easing: "cubic-bezier(.2,.8,.2,1)" });
-        fall.onfinish = () => s.remove();
-      }
-    });
-  </script>
+</script>
 </body>
 </html>
