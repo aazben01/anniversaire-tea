@@ -56,13 +56,17 @@ input {
 
 <section id="textSection" class="card hidden">
   <h1>Vérification sémantique finale</h1>
-  <p>
-    chaton chaton<br>
-    j’aime le chaton<br>
-    tu es le chaton<br>
-    donc je ______
-  </p>
-  <input type="text" id="loveInput" placeholder="Complétez la phrase">
+
+  <div style="text-align:center;">
+    <p style="font-size:20px; line-height:2; margin:0;">
+      Chaton, chaton,<br>
+      J'aime le chaton,<br>
+      Tu es le chaton,<br>
+      Donc "<strong>__________</strong>".
+    </p>
+  </div>
+
+  <input type="text" id="loveInput" placeholder="Écrivez le mot entre guillemets">
   <button id="textValidateBtn">Valider</button>
   <p id="textFeedback" class="muted"></p>
 </section>
@@ -219,16 +223,22 @@ textSection.classList.remove("hidden");
 document.getElementById("resetBtn").onclick=()=>loadRound();
 
 function normalize(s){
-return (s||"").toLowerCase().trim().replaceAll("’","'").replace(/\s+/g," ");
+return (s||"")
+.trim()
+.replaceAll("’","'")
+.replace(/\s+/g," ");
 }
 
 document.getElementById("textValidateBtn").onclick=()=>{
-const value=normalize(document.getElementById("loveInput").value);
-if(value.includes("t'aime")||value.includes("t aime")){
+const raw=normalize(document.getElementById("loveInput").value);
+const value=raw.toLowerCase();
+
+if(value==="je t'aime"){
 textSection.classList.add("hidden");
 revealSection.classList.remove("hidden");
 }else{
-document.getElementById("textFeedback").textContent="Réponse presque correcte… réessayez.";
+document.getElementById("textFeedback").textContent=
+"Relis bien ce qui doit être écrit entre les guillemets.";
 }
 };
 
