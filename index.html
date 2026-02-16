@@ -40,9 +40,13 @@ input {
 <div class="wrap">
 
 <section id="portalSection" class="card">
-  <h1>Mesures préventives - Mise à jour</h1>
-  <p>Accès réservé à la consultation des notes internes liées aux mesures préventives temporaires.</p>
-  <button id="startBtn">Continuer</button>
+  <h1>Note interne</h1>
+  <p class="muted">Accès réservé aux personnels autorisés.</p>
+  <p>
+    Une procédure de vérification d’identité est requise afin de confirmer
+    qu’il s’agit bien de <strong>Tea Cimini</strong>.
+  </p>
+  <button id="startBtn">Lancer la vérification</button>
 </section>
 
 <section id="captchaSection" class="card hidden">
@@ -55,7 +59,7 @@ input {
 </section>
 
 <section id="textSection" class="card hidden">
-  <h1>Vérification sémantique finale</h1>
+  <h1>Authentification finale</h1>
 
   <div style="text-align:center;">
     <p style="font-size:20px; line-height:2; margin:0;">
@@ -66,14 +70,22 @@ input {
     </p>
   </div>
 
-  <input type="text" id="loveInput" placeholder="Écrivez le mot entre guillemets">
+  <input type="text" id="loveInput" placeholder="Écrivez le contenu exact entre guillemets">
   <button id="textValidateBtn">Valider</button>
   <p id="textFeedback" class="muted"></p>
 </section>
 
 <section id="revealSection" class="card hidden">
   <h1>Joyeux anniversaire Tea ❤️</h1>
-  <p class="muted">Validation complète. Accès accordé.</p>
+
+  <p style="line-height:1.8; margin-top:10px;">
+    Aujourd’hui, je te célèbre.<br>
+    Merci pour ta douceur, ta lumière, ta force et ton élégance.<br>
+    Tu rends le monde plus beau simplement en y étant.<br>
+    <br>
+    Je t’aime.<br>
+    Alfredo
+  </p>
 
   <div class="grid">
     <div class="tile"><img src="reveal1.jpeg"></div>
@@ -137,7 +149,7 @@ images:[
 },
 
 {
-instruction:"Veuillez sélectionner toutes les images présentant une valeur esthétique exceptionnelle.",
+instruction:"Veuillez sélectionner toutes les images comportant une œuvre d’art.",
 images:[
 {src:"r4_1.jpeg",correct:true},
 {src:"r4_2.jpeg",correct:true},
@@ -176,7 +188,7 @@ function loadRound(){
 selected.clear();
 feedbackEl.textContent="";
 instructionEl.textContent=rounds[currentRound].instruction;
-roundIndicator.textContent="Round "+(currentRound+1)+"/4";
+roundIndicator.textContent="Vérification "+(currentRound+1)+"/4";
 gridEl.innerHTML="";
 
 rounds[currentRound].images.forEach((img,index)=>{
@@ -238,7 +250,7 @@ textSection.classList.add("hidden");
 revealSection.classList.remove("hidden");
 }else{
 document.getElementById("textFeedback").textContent=
-"Relis bien ce qui doit être écrit entre les guillemets.";
+"Relisez attentivement la phrase entre guillemets.";
 }
 };
 
