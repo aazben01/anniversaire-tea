@@ -13,10 +13,7 @@
   p { line-height:1.7; margin:10px 0; }
   .muted { opacity:0.75; font-size:13px; }
 
-  /* Grille captcha: 3 colonnes */
   .gridCaptcha { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:15px; }
-
-  /* Grille reveal: 2 colonnes (conservée, même si reveal n'utilise plus 4 images) */
   .gridReveal { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:20px; }
 
   .tile {
@@ -29,7 +26,6 @@
   }
   .tile img { width:100%; height:100%; object-fit:cover; display:block; }
 
-  /* Highlight sélection */
   .tile.selected {
     border-color:#ff4d88;
     box-shadow:0 0 0 3px rgba(255,77,136,0.2) inset;
@@ -109,14 +105,14 @@
   </section>
 
   <section id="revealSection" class="card hidden">
-    <h1>JOYEUX ANNIVERSAIRE TEA !!! 🎉🎂🥳✨</h1>
+    <h1>JOYEUX ANNIVERSAIRE !!! 🎉🎂🥳✨</h1>
 
     <div class="tile" style="max-width:420px; margin:18px auto 0; cursor:default;">
       <img src="reveal1.jpeg" alt="Reveal">
     </div>
 
     <div style="margin-top:20px; line-height:1.8;">
-      <p><strong>Ma très chère Tea,</strong></p>
+      <p>Ma très chère Tea,</p>
 
       <p>
         Te voilà entrant dans l’une des années les plus symboliques de ta vie.
@@ -136,7 +132,7 @@
 
       <p style="margin-top:25px;">
         Bien à toi,<br><br>
-        <strong>Aaz</strong>
+        Aaz
       </p>
     </div>
 
@@ -258,7 +254,6 @@ function loadRound(){
 
 document.getElementById("resetBtn").onclick = () => loadRound();
 
-/* NOUVEAU: compter le nombre de bonnes réponses du round courant */
 function countCorrectForCurrentRound(){
   return rounds[currentRound].images.reduce((acc, img) => acc + (img.correct ? 1 : 0), 0);
 }
