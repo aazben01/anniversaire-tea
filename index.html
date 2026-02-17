@@ -290,19 +290,7 @@ function normalize(s){
     .replace(/\s+/g," ");
 }
 
-document.getElementById("textValidateBtn").onclick = () => {
-  const raw = normalize(document.getElementById("loveInput").value);
-  const value = raw.toLowerCase();
-
-  if (value === "je t'aime") {
-    textSection.classList.add("hidden");
-    revealSection.classList.remove("hidden");
-  } else {
-    document.getElementById("textFeedback").textContent = "Relisez attentivement les paroles.";
-  }
-};
-
-document.getElementById("confettiBtn").onclick = () => {
+function launchConfetti(){
   for (let i = 0; i < 140; i++) {
     const s = document.createElement("div");
     s.style.position = "fixed";
@@ -316,7 +304,22 @@ document.getElementById("confettiBtn").onclick = () => {
     const fall = s.animate([{top:"-10px"},{top:"105vh"}], {duration:1600 + Math.random()*1200});
     fall.onfinish = () => s.remove();
   }
+}
+
+document.getElementById("textValidateBtn").onclick = () => {
+  const raw = normalize(document.getElementById("loveInput").value);
+  const value = raw.toLowerCase();
+
+  if (value === "je t'aime") {
+    textSection.classList.add("hidden");
+    revealSection.classList.remove("hidden");
+    launchConfetti();
+  } else {
+    document.getElementById("textFeedback").textContent = "Relisez attentivement les paroles.";
+  }
 };
+
+document.getElementById("confettiBtn").onclick = launchConfetti;
 </script>
 
 </body>
