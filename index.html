@@ -61,6 +61,10 @@ input {
 <section id="textSection" class="card hidden">
   <h1>Authentification finale</h1>
 
+  <p class="muted">
+    Veuillez compléter les paroles de cette célèbre chanson pour confirmer votre identité.
+  </p>
+
   <div style="text-align:center;">
     <p style="font-size:20px; line-height:2; margin:0;">
       Chaton, chaton,<br>
@@ -70,7 +74,7 @@ input {
     </p>
   </div>
 
-  <input type="text" id="loveInput" placeholder="Écrivez le contenu exact entre guillemets">
+  <input type="text" id="loveInput" placeholder="Complétez les paroles">
   <button id="textValidateBtn">Valider</button>
   <p id="textFeedback" class="muted"></p>
 </section>
@@ -250,7 +254,7 @@ textSection.classList.add("hidden");
 revealSection.classList.remove("hidden");
 }else{
 document.getElementById("textFeedback").textContent=
-"Relisez attentivement la phrase entre guillemets.";
+"Relisez attentivement les paroles.";
 }
 };
 
