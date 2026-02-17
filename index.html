@@ -258,11 +258,20 @@ function loadRound(){
 
 document.getElementById("resetBtn").onclick = () => loadRound();
 
+/* NOUVEAU: compter le nombre de bonnes réponses du round courant */
+function countCorrectForCurrentRound(){
+  return rounds[currentRound].images.reduce((acc, img) => acc + (img.correct ? 1 : 0), 0);
+}
+
 document.getElementById("validateBtn").onclick = () => {
   const imgs = rounds[currentRound].images;
+
   for (let i = 0; i < imgs.length; i++) {
     if (imgs[i].correct !== selected.has(i)) {
-      feedbackEl.textContent = "Sélection incorrecte. Merci de réessayer.";
+      const n = countCorrectForCurrentRound();
+      feedbackEl.textContent =
+        "Sélection incorrecte. Merci de réessayer. Indice : " +
+        n + " " + (n === 1 ? "image" : "images") + " à sélectionner.";
       return;
     }
   }
