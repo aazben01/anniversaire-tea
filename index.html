@@ -9,14 +9,13 @@
 body { font-family: system-ui, Arial; margin:0; background:#0b0b10; color:#fff; }
 .wrap { max-width:900px; margin:auto; padding:30px 16px 60px; }
 .card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:18px; padding:20px; margin-bottom:20px; }
-h1 { font-size:20px; margin:0 0 10px; }
-p { line-height:1.6; margin:8px 0; }
+h1 { font-size:22px; margin:0 0 15px; }
+p { line-height:1.7; margin:10px 0; }
 .muted { opacity:0.75; font-size:13px; }
 
-.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:15px; }
-.tile { aspect-ratio:1/1; overflow:hidden; border-radius:12px; cursor:pointer; border:2px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.04); }
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:20px; }
+.tile { aspect-ratio:1/1; overflow:hidden; border-radius:12px; border:2px solid rgba(255,255,255,0.12); }
 .tile img { width:100%; height:100%; object-fit:cover; display:block; }
-.tile.selected { border-color:#ff4d88; box-shadow:0 0 0 3px rgba(255,77,136,0.2) inset; }
 
 button { margin-top:15px; padding:12px 14px; border:0; border-radius:12px; font-weight:700; cursor:pointer; background:#ff4d88; color:#111; }
 .ghost { background:rgba(255,255,255,0.10); color:#fff; border:1px solid rgba(255,255,255,0.14); }
@@ -82,14 +81,30 @@ input {
 <section id="revealSection" class="card hidden">
   <h1>Joyeux anniversaire Tea ❤️</h1>
 
-  <p style="line-height:1.8; margin-top:10px;">
-    Aujourd’hui, je te célèbre.<br>
-    Merci pour ta douceur, ta lumière, ta force et ton élégance.<br>
-    Tu rends le monde plus beau simplement en y étant.<br>
-    <br>
-    Je t’aime.<br>
-    Alfredo
-  </p>
+  <div style="margin-top:20px; line-height:1.8;">
+    <p><strong>Ma très chère Tea,</strong></p>
+
+    <p>
+      Te voilà entrant dans l’une des années les plus symboliques de ta vie.
+    </p>
+
+    <p>
+      Malgré la distance, je pourrai entendre la musique et les rires, et je célébrerai avec vous.
+    </p>
+
+    <p>
+      Je te souhaite une année à la hauteur de ce que tu es, avec des projets qui t’enthousiasment, des rencontres qui t’inspirent, des moments où tu te sens exactement à ta place. Je te souhaite aussi des défis qui te stimulent, parce que tu es faite pour découvrir et avancer.
+    </p>
+
+    <p>
+      Profite de cette journée. Laisse-toi célébrer. Laisse-toi surprendre. Et surtout, continue d’être cette personne pleine et entière, pétillante à souhait, que j’apprécie profondément.
+    </p>
+
+    <p style="margin-top:25px;">
+      Bien à toi,<br><br>
+      <strong>Aaz</strong>
+    </p>
+  </div>
 
   <div class="grid">
     <div class="tile"><img src="reveal1.jpeg"></div>
@@ -106,7 +121,6 @@ input {
 <script>
 
 const rounds = [
-
 {
 instruction:"Veuillez sélectionner toutes les cacahuètes présentes sur ces images.",
 images:[
@@ -121,7 +135,6 @@ images:[
 {src:"r1_9.jpeg",correct:false}
 ]
 },
-
 {
 instruction:"Veuillez sélectionner toutes les images présentant un fort indice de mignonnerie animale.",
 images:[
@@ -136,7 +149,6 @@ images:[
 {src:"r2_9.jpeg",correct:true}
 ]
 },
-
 {
 instruction:"Veuillez sélectionner toutes les preuves d’amour inconditionnel… envers la nourriture.",
 images:[
@@ -151,7 +163,6 @@ images:[
 {src:"r3_9.jpeg",correct:true}
 ]
 },
-
 {
 instruction:"Veuillez sélectionner toutes les images comportant une œuvre d’art.",
 images:[
@@ -166,7 +177,6 @@ images:[
 {src:"r4_9.jpeg",correct:true}
 ]
 }
-
 ];
 
 let currentRound=0;
@@ -225,9 +235,7 @@ feedbackEl.textContent="Sélection incorrecte. Merci de réessayer.";
 return;
 }
 }
-
 currentRound++;
-
 if(currentRound<rounds.length){
 loadRound();
 }else{
@@ -239,22 +247,17 @@ textSection.classList.remove("hidden");
 document.getElementById("resetBtn").onclick=()=>loadRound();
 
 function normalize(s){
-return (s||"")
-.trim()
-.replaceAll("’","'")
-.replace(/\s+/g," ");
+return (s||"").trim().replaceAll("’","'").replace(/\s+/g," ");
 }
 
 document.getElementById("textValidateBtn").onclick=()=>{
 const raw=normalize(document.getElementById("loveInput").value);
 const value=raw.toLowerCase();
-
 if(value==="je t'aime"){
 textSection.classList.add("hidden");
 revealSection.classList.remove("hidden");
 }else{
-document.getElementById("textFeedback").textContent=
-"Relisez attentivement les paroles.";
+document.getElementById("textFeedback").textContent="Relisez attentivement les paroles.";
 }
 };
 
