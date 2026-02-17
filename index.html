@@ -16,7 +16,7 @@
   /* Grille captcha: 3 colonnes */
   .gridCaptcha { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:15px; }
 
-  /* Grille reveal: 2 colonnes */
+  /* Grille reveal: 2 colonnes (conservée, même si reveal n'utilise plus 4 images) */
   .gridReveal { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:20px; }
 
   .tile {
@@ -29,7 +29,7 @@
   }
   .tile img { width:100%; height:100%; object-fit:cover; display:block; }
 
-  /* Important: highlight sélection */
+  /* Highlight sélection */
   .tile.selected {
     border-color:#ff4d88;
     box-shadow:0 0 0 3px rgba(255,77,136,0.2) inset;
@@ -109,7 +109,11 @@
   </section>
 
   <section id="revealSection" class="card hidden">
-    <h1>Joyeux anniversaire Tea ❤️</h1>
+    <h1>JOYEUX ANNIVERSAIRE TEA !!! 🎉🎂🥳✨</h1>
+
+    <div class="tile" style="max-width:420px; margin:18px auto 0; cursor:default;">
+      <img src="reveal1.jpeg" alt="Reveal">
+    </div>
 
     <div style="margin-top:20px; line-height:1.8;">
       <p><strong>Ma très chère Tea,</strong></p>
@@ -136,13 +140,6 @@
       </p>
     </div>
 
-    <div class="gridReveal">
-      <div class="tile"><img src="reveal1.jpeg" alt="Reveal 1"></div>
-      <div class="tile"><img src="reveal2.jpeg" alt="Reveal 2"></div>
-      <div class="tile"><img src="reveal3.jpeg" alt="Reveal 3"></div>
-      <div class="tile"><img src="reveal4.jpeg" alt="Reveal 4"></div>
-    </div>
-
     <button id="confettiBtn">Lancer des confettis</button>
   </section>
 
@@ -151,7 +148,7 @@
 <script>
 const rounds = [
   {
-    instruction:"Veuillez sélectionner toutes les cacahuètes présentes sur ces images.",
+    instruction:"Veuillez sélectionner toutes les images présentant une cacahuète.",
     images:[
       {src:"r1_1.jpeg",correct:true},
       {src:"r1_2.jpeg",correct:false},
@@ -179,7 +176,7 @@ const rounds = [
     ]
   },
   {
-    instruction:"Veuillez sélectionner toutes les preuves d’amour inconditionnel… envers la nourriture.",
+    instruction:"Veuillez sélectionner toutes les images présentant une preuve d’amour inconditionnel… envers la nourriture.",
     images:[
       {src:"r3_1.jpeg",correct:true},
       {src:"r3_2.jpeg",correct:true},
